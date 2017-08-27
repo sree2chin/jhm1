@@ -28,11 +28,11 @@ router.get("/", function(req, res) {
 //         Auth routes
 
 //show signup form
-router.get("/register", function(req, res) {
+app.get("/register", function(req, res) {
     res.render("users/register");
 });
 
-router.post ("/register", function(req, res) {
+app.post ("/register", function(req, res) {
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err) {
@@ -48,11 +48,11 @@ router.post ("/register", function(req, res) {
 });
 
 // login routes
-router.get("/login", function(req, res) {
+app.get("/login", function(req, res) {
     res.render("users/login");
 });
 
-router.post(
+app.post(
     "/login",
     passport.authenticate("local", {
         successRedirect: "/campgrounds",
@@ -63,7 +63,7 @@ router.post(
     }
 );
 
-router.get("/logout", function(req, res) {
+app.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/campgrounds");
 });
@@ -76,6 +76,7 @@ function isLoggedIn(req, res, next) {
         res.redirect("/login");
     }
 }
+
 //         Auth routes XXX  
 
 router.get("/dynamic/:dynamic", function(req, res) {
