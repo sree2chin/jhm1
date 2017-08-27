@@ -14,6 +14,7 @@ var seedDB = require("./models/seed.js");
 
 var campgroundRoutes = require("./routes/campgrounds");
 var commentRoutes = require("./routes/comments");
+var indexRoutes = require("./routes/index");
 
 mongoose.connect("mongodb://localhost/yelp_camp");
 
@@ -38,7 +39,7 @@ app.use(function(req, res, next){
 });
 // Middleware IMP end XXXX
 
-seedDB();
+// seedDB(); // seed the database
 
 // Campground.create(
 // 	{
@@ -68,92 +69,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
-// sample request
-// request("https://www.google.com", function(error, response, body){
-// 	if(error) {
-// 		console.log("some thing went wrong", error);
-// 	} else {
-// 		if(response.statusCode == 200) {
-// 			console.log("worked");
-// 			console.log(body);
-// 		} else {
-// 			console.log("failed");
-// 		}
-// 	}
-// })
-
-app.get("/", function(req, res) {
-	res.render("index");
-});
-
 app.use(campgroundRoutes);
 app.use(commentRoutes);
-
-
-// Depricate
-// app.get("/dog", function(req, res) {
-// 	res.send("Hello dog");
-// })
-
-//         Auth routes
-
-//show signup form
-app.get("/register", function(req, res) {
-    res.render("users/register");
-});
-
-app.post ("/register", function(req, res) {
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
-        if(err) {
-            console.log(err);
-            return res.render("register"); 
-        } else {
-            passport.authenticate("local")(req, res, function(){
-                 res.redirect("/campgrounds");
-            })
-        }
-    });
-    // res.send("register post route");
-});
-
-// login routes
-app.get("/login", function(req, res) {
-    res.render("users/login");
-});
-
-app.post(
-    "/login",
-    passport.authenticate("local", {
-        successRedirect: "/campgrounds",
-        failureRedirect: "/login"
-    }),
-    function(req, res) {
-        console.log("In login route");
-    }
-);
-
-app.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/campgrounds");
-});
-
-// middleware
-function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()) {
-        return next();
-    } else {
-        res.redirect("/login");
-    }
-}
-
-//         Auth routes XXX  
-
-app.get("/dynamic/:dynamic", function(req, res) {
-	console.log(req.params);
-	res.send("dynamic");
-})
+app.use(indexRoutes);
 
 app.get("*", function(req, res) {
 	res.send("404");
@@ -163,6 +81,4 @@ app.get("*", function(req, res) {
 app.listen(app.get('port'), function(){
 	console.log("server has started");
 });
-
-// console.log("our exress app");
 

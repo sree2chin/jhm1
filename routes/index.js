@@ -28,11 +28,11 @@ router.get("/", function(req, res) {
 //         Auth routes
 
 //show signup form
-app.get("/register", function(req, res) {
+router.get("/register", function(req, res) {
     res.render("users/register");
 });
 
-app.post ("/register", function(req, res) {
+router.post ("/register", function(req, res) {
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err) {
@@ -48,11 +48,11 @@ app.post ("/register", function(req, res) {
 });
 
 // login routes
-app.get("/login", function(req, res) {
+router.get("/login", function(req, res) {
     res.render("users/login");
 });
 
-app.post(
+router.post(
     "/login",
     passport.authenticate("local", {
         successRedirect: "/campgrounds",
@@ -63,7 +63,7 @@ app.post(
     }
 );
 
-app.get("/logout", function(req, res) {
+router.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/campgrounds");
 });
