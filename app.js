@@ -5,6 +5,7 @@ var ejs = require("ejs");
 var bodyParser = require("body-parser");
 var passport = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
+var methodOverride = require("method-override");
 var LocalStrategy = require("passport-local");
 var mongoose = require("mongoose");
 var Campground = require("./models/campground");
@@ -64,6 +65,7 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(methodOverride("_method"));
 
 app.use(bodyParser.urlencoded({
     extended: true
