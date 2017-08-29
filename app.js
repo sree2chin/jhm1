@@ -8,6 +8,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var LocalStrategy = require("passport-local");
 var mongoose = require("mongoose");
+var flash = require("connect-flash");
 var Campground = require("./models/campground");
 var Comment = require("./models/comment");
 var User = require("./models/user");
@@ -33,7 +34,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 // auth setup end .. 
 
-// Middleware IMP******
+// Middleware this will let the currentUser obj available in ejs..IMP******
 app.use(function(req, res, next){
     res.locals.currentUser = req.user; 
     next(); 
@@ -66,6 +67,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(methodOverride("_method"));
+app.use(flash());
 
 app.use(bodyParser.urlencoded({
     extended: true
