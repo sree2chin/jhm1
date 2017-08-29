@@ -26,6 +26,7 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }))
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -37,6 +38,8 @@ passport.deserializeUser(User.deserializeUser());
 // Middleware this will let the currentUser obj available in ejs..IMP******
 app.use(function(req, res, next){
     res.locals.currentUser = req.user; 
+    res.locals.error = req.flash("error"); 
+    res.locals.success = req.flash("success"); 
     next(); 
 });
 // Middleware IMP end XXXX
@@ -67,7 +70,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(methodOverride("_method"));
-app.use(flash());
+
 
 app.use(bodyParser.urlencoded({
     extended: true
