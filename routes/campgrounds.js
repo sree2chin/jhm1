@@ -17,6 +17,18 @@ router.get("/campgrounds", function(req, res) {
 	// res.render("campgrounds", {campgrounds: campgrounds});
 });
 
+router.get("/campgrounds-test", function(req, res) {
+	// Get all campgrounds from DB
+    Campground.find({}, function(err, allCampgrounds){
+       if(err){
+           console.log(err);
+       } else {
+          res.send({campgrounds:allCampgrounds});
+       }
+    });
+	// res.render("campgrounds", {campgrounds: campgrounds});
+});
+
 router.get("/campgrounds/new", middleware.isLoggedIn, function(req, res){
    res.render("campgrounds/new"); 
 });

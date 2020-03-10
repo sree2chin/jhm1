@@ -19,7 +19,8 @@ var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://sree2chin:sree2chin@ds111124.mlab.com:11124/yelpcamp");
+// mongoose.connect("mongodb://sree2chin:sree2chin@ds111124.mlab.com:11124/yelpcamp");
+mongoose.connect("mongodb+srv://sree2chin:sree2chin@ihm-alumni-1-ccuob.gcp.mongodb.net/test?retryWrites=true&w=majority");
 
 // auth setup
 app.use(require("express-session")({
